@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+	<title>Exoplanet Birthdays</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    </head>
+    <body>
+      
+      <p>Scanning exoplanets:</p>
+
+      <ul id="result">
+      </ul>
+
+<script>
+ $(function() {
+   var exo = <%- JSON.stringify(exo) %>;
+   for (var i=0; i<exo.length; i++) {
+     var name = exo[i]["# name"];
+     $("#result").append("<li>" + name + "</li>");
+   }
+ });
+</script>
+
+    </body>
+</html>
