@@ -6,19 +6,131 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     </head>
     <body>
-      
+
+      <p>Enter your birth date</p>
+
+      <form>
+	<input type="text" id="birth_date_year" placeholder="Year (NNNN)" />
+	<input type="text" id="birth_date_month" placeholder="Month (NN)" />
+	<input type="text" id="birth_date_day" placeholder="Day (NN)" />
+	<input type="button" id="go" value="go" />
+	<input type="button" id="eg1" value="example1" />
+	<input type="button" id="eg2" value="example2" />
+      </form>
+
       <p>Scanning exoplanets:</p>
 
       <ul id="result">
       </ul>
 
 <script>
+
+ var exo = <%- JSON.stringify(exo) %>;
+
  $(function() {
-   var exo = <%- JSON.stringify(exo) %>;
-   for (var i=0; i<exo.length; i++) {
-     var name = exo[i]["# name"];
-     $("#result").append("<li>" + name + "</li>");
+   function secondsBetween(t1,t2) {
+     return (t1.getTime() - t2.getTime()) / 1000.0;
    }
+   
+   function calculate(now,target) {
+     var days = secondsBetween(now,target)/(60*60*24);
+     var log = [];
+     for (var i=0; i<exo.length; i++) {
+       var ex = exo[i];
+       var name = ex["# name"];
+       var stats = "";
+       var orbital_period = parseFloat(ex[" orbital_period"]);
+       var orbital_period_err_max = parseFloat(ex[" orbital_period_err_max"]);
+       if (isNaN(orbital_period)) continue;
+       if (isNaN(orbital_period_err_max)) continue;
+       if (orbital_period_err_max<0.0001) continue;
+       if (orbital_period<0.0001) continue;
+       if (orbital_period<60) continue;
+       if (orbital_period_err_max/orbital_period > 0.001) continue;
+       stats = " orbital period " + orbital_period + " days +- " + orbital_period_err_max + " days ";
+       var reps = days/orbital_period;
+       var base = Math.floor(reps)*orbital_period;
+       var diff = days-base;
+       stats += ", reps " + reps + " diff " + diff;
+       if (diff>15) continue;
+       log.push({
+	 name: name,
+	 stats: stats,
+	 diff: diff,
+	 orbital_period: orbital_period,
+	 value: -diff //Math.log(1+orbital_period) - Math.log(2+diff)
+       });
+     }
+
+     function sortHit(a,b) {
+       var va = a.value;
+       var vb = b.value;
+       if (va>vb) return -1;
+       if (va<vb) return 1;
+       return 0;
+     }
+     log.sort(sortHit);
+     for (var i=0; i<log.length; i++) {
+       var ex = log[i];
+       $("#result").append("<li><b>" + ex.name + "</b> " + ex.stats + "</li>");
+     }
+   }
+
+   function update() {
+     var page = $('#result');
+     page.html("");
+     var year = parseFloat($('#birth_date_year').val());
+     var month = parseFloat($('#birth_date_month').val());
+     var day = parseFloat($('#birth_date_day').val());
+     var iyear = Math.floor(year+0.5);
+     var imonth = Math.floor(month+0.5);
+     var iday = Math.floor(day+0.5);
+     if (isNaN(year)||isNaN(month)||isNaN(day)) {
+       if (!isNaN(year)) { 
+	 page.append("<div>year: " + iyear + "</div>"); 
+       } else {
+	 page.append("<div>(do not know birth year)</div>"); 
+       }
+       if (!isNaN(month)) { 
+	 page.append("<div>month: " + imonth + "</div>"); 
+       } else {
+	 page.append("<div>(do not know birth month)</div>"); 
+       }
+       if (!isNaN(day)) { 
+	 page.append("<div>day: " + iday + "</div>");
+       } else {
+	 page.append("<div>(do not know birth day)</div>"); 
+       }
+       return;
+     }
+     var target = new Date(iyear,imonth,iday);
+     var now = new Date();
+     calculate(now,target);
+   }
+
+   $('#birth_date_year').change(update);
+   $('#birth_date_month').change(update);
+   $('#birth_date_day').change(update);
+   
+   $('#go').click(update);
+
+   $('#eg1').click(function() {
+     $('#birth_date_year').val("1976");
+     $('#birth_date_month').val("9");
+     $('#birth_date_day').val("14");
+     update();
+     return false;
+   });
+
+   $('#eg2').click(function() {
+     $('#birth_date_year').val("2001");
+     $('#birth_date_month').val("4");
+     $('#birth_date_day').val("3");
+     update();
+     return false;
+   });
+
+   update();
  });
 </script>
 
