@@ -18,6 +18,8 @@
 	<input type="button" id="eg2" value="example2" />
       </form>
 
+      <div id="date_string"></div>
+
       <p>Scanning exoplanets:</p>
 
       <ul id="result">
@@ -103,8 +105,9 @@
        }
        return;
      }
-     var target = new Date(iyear,imonth,iday);
+     var target = new Date(iyear,imonth-1,iday);
      var now = new Date();
+     $("#date_string").html(target.toDateString());
      calculate(now,target);
    }
 
