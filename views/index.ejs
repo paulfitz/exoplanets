@@ -3,10 +3,10 @@
     <head>
         <meta charset="utf-8">
 	<title>Exoplanet Birthdays</title>
-	<link rel="stylesheet" href="main.css" />
+	<link rel="stylesheet" href="/main.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script type="text/javascript" src="exo.js"></script>
-	<script type="text/javascript" src="ejs_production.js"></script>
+	<script type="text/javascript" src="/exo.js"></script>
+	<script type="text/javascript" src="/ejs_production.js"></script>
     </head>
     <body>
 
@@ -31,7 +31,7 @@
 <script>
 
  var exo_data = <%- JSON.stringify(exo) %>;
- var unit = new EJS({url: 'unit.ejs'});
+ var unit = new EJS({url: '/unit.ejs'});
 
  $(function() {
    function update() {
@@ -67,6 +67,9 @@
      var x = new Exo(exo_data);
      var log = x.compute(now,target);
      page.html(unit.render({ log: log }));
+     if (window.history) {
+        history.replaceState(null, null, "/" + iyear + "/" + imonth + "/" + iday)
+     }
    }
 
    $('#birth_date_year').change(update);
@@ -99,6 +102,11 @@
      return false;
    });
 
+<% if (date) { %>
+     $('#birth_date_year').val(<%= parseInt(date.year) %>);
+     $('#birth_date_month').val(<%= parseInt(date.month) %>);
+     $('#birth_date_day').val(<%= parseInt(date.day) %>);
+<% } %>
    update();
  });
 </script>
