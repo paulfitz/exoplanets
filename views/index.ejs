@@ -24,8 +24,6 @@
 
       <div id="date_string"></div>
 
-      <p>Scanning exoplanets:</p>
-
       <div id="result"></div>
 
 <script>
@@ -65,8 +63,9 @@
      var now = new Date();
      $("#date_string").html(target.toDateString());
      var x = new Exo(exo_data);
-     var log = x.compute(now,target);
-     page.html(unit.render({ log: log }));
+     var calc = x.compute(now,target);
+     page.html(unit.render({ calc: calc }));
+ console.log(calc);
      if (window.history) {
         history.replaceState(null, null, "/" + iyear + "/" + imonth + "/" + iday)
      }

@@ -1,5 +1,14 @@
-<% for (var i=0; i<log.length; i++) { %>
-<% var unit = log[i] %>
+<% if (calc.best.length>0) { %>
+<div class='cheer'>
+Happy <%= calc.best[0].th %>
+<%= calc.best[0].ian %>
+Birthday!
+</div>
+<% } %>
+
+
+<% for (var i=0; i<calc.log.length; i++) { %>
+<% var unit = calc.log[i] %>
 <div class='event'>
   <b><%= unit.name %></b><br />
   Age <%= unit.age %><br />

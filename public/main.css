@@ -1,7 +1,14 @@
 
 .event {
   display: inline-block;
-  border: 1px solid black;
+  border: 1px solid #aaa;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.cheer { 
+  font-size: 300%;
   padding: 10px;
   margin: 10px;
 }

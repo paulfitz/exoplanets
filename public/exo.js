@@ -34,11 +34,24 @@ Exo.prototype.compute = function(now,birth) {
 	if (diff>15) continue;
 	var idiff = Math.round(diff); 
 	if (idiff<-1) continue;
+	var ian = name.replace(/ /g,'-') + "-ian";
+	var th = "th";
+	switch (age % 10) {
+        case 1: th = "st";
+        case 2: th = "nd";
+        case 3: th = "rd";
+	}
+	th = age + "<sup>" + th + "</sup>";
+	if (age == 0) th = "Zeroth";
+	if (age == 1) th = "First";
+	if (age == 2) th = "Second";
 	log.push({
 	    name: name,
 	    stats: stats,
 	    diff: diff,
 	    idiff: idiff,
+	    ian: ian,
+	    th: th,
 	    age: age,
 	    orbital_period: orbital_period,
 	    value: -diff
@@ -52,5 +65,24 @@ Exo.prototype.compute = function(now,birth) {
 	return 0;
     }
     log.sort(sortHit);
-    return log;
+    var bests = [];
+    for (var i=0; i<log.length; i++) {
+	var ex = log[i];
+	if (ex.idiff == 0) {
+	    bests.push(ex);
+	    continue;
+	}
+	if (ex.idiff>5) break;
+    }
+    if (bests.length==0) {
+	for (var i=0; i<log.length; i++) {
+	    var ex = log[i];
+	    if (ex.idiff<=3) {
+		bests.push(ex);
+		continue;
+	    }
+	    break;
+	}
+    }
+    return { log: log, best: bests };
 }
