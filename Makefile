@@ -1,2 +1,2 @@
 default:
-	nodemon -e js,ejs index.js
+	nodemon -e js,ejs,json index.js

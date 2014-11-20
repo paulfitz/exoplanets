@@ -3,7 +3,10 @@
     <head>
         <meta charset="utf-8">
 	<title>Exoplanet Birthdays</title>
+	<link rel="stylesheet" href="main.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="exo.js"></script>
+	<script type="text/javascript" src="ejs_production.js"></script>
     </head>
     <body>
 
@@ -16,68 +19,21 @@
 	<input type="button" id="go" value="go" />
 	<input type="button" id="eg1" value="example1" />
 	<input type="button" id="eg2" value="example2" />
+	<input type="button" id="eg3" value="example3" />
       </form>
 
       <div id="date_string"></div>
 
       <p>Scanning exoplanets:</p>
 
-      <ul id="result">
-      </ul>
+      <div id="result"></div>
 
 <script>
 
- var exo = <%- JSON.stringify(exo) %>;
+ var exo_data = <%- JSON.stringify(exo) %>;
+ var unit = new EJS({url: 'unit.ejs'});
 
  $(function() {
-   function secondsBetween(t1,t2) {
-     return (t1.getTime() - t2.getTime()) / 1000.0;
-   }
-   
-   function calculate(now,target) {
-     var days = secondsBetween(now,target)/(60*60*24);
-     var log = [];
-     for (var i=0; i<exo.length; i++) {
-       var ex = exo[i];
-       var name = ex["# name"];
-       var stats = "";
-       var orbital_period = parseFloat(ex[" orbital_period"]);
-       var orbital_period_err_max = parseFloat(ex[" orbital_period_err_max"]);
-       if (isNaN(orbital_period)) continue;
-       if (isNaN(orbital_period_err_max)) continue;
-       if (orbital_period_err_max<0.0001) continue;
-       if (orbital_period<0.0001) continue;
-       if (orbital_period<60) continue;
-       if (orbital_period_err_max/orbital_period > 0.001) continue;
-       stats = " orbital period " + orbital_period + " days +- " + orbital_period_err_max + " days ";
-       var reps = days/orbital_period;
-       var base = Math.floor(reps)*orbital_period;
-       var diff = days-base;
-       stats += ", reps " + reps + " diff " + diff;
-       if (diff>15) continue;
-       log.push({
-	 name: name,
-	 stats: stats,
-	 diff: diff,
-	 orbital_period: orbital_period,
-	 value: -diff //Math.log(1+orbital_period) - Math.log(2+diff)
-       });
-     }
-
-     function sortHit(a,b) {
-       var va = a.value;
-       var vb = b.value;
-       if (va>vb) return -1;
-       if (va<vb) return 1;
-       return 0;
-     }
-     log.sort(sortHit);
-     for (var i=0; i<log.length; i++) {
-       var ex = log[i];
-       $("#result").append("<li><b>" + ex.name + "</b> " + ex.stats + "</li>");
-     }
-   }
-
    function update() {
      var page = $('#result');
      page.html("");
@@ -108,7 +64,9 @@
      var target = new Date(iyear,imonth-1,iday);
      var now = new Date();
      $("#date_string").html(target.toDateString());
-     calculate(now,target);
+     var x = new Exo(exo_data);
+     var log = x.compute(now,target);
+     page.html(unit.render({ log: log }));
    }
 
    $('#birth_date_year').change(update);
@@ -128,7 +86,15 @@
    $('#eg2').click(function() {
      $('#birth_date_year').val("2001");
      $('#birth_date_month').val("4");
-     $('#birth_date_day').val("3");
+     $('#birth_date_day').val("5");
+     update();
+     return false;
+   });
+
+   $('#eg3').click(function() {
+     $('#birth_date_year').val("2001");
+     $('#birth_date_month').val("11");
+     $('#birth_date_day').val("20");
      update();
      return false;
    });

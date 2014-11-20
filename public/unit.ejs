@@ -1,0 +1,16 @@
+<% for (var i=0; i<log.length; i++) { %>
+<% var unit = log[i] %>
+<div class='event'>
+  <b><%= unit.name %></b><br />
+  Age <%= unit.age %><br />
+  <% if (unit.idiff == 0) { %>
+  Today
+  <% } else if (unit.idiff == 1) { %>
+  Tomorrow
+  <% } else if (unit.idiff == -1) { %>
+  Yesterday
+  <% } else { %>
+  In <%= unit.idiff %> days time<br />
+  <% } %>
+</div>
+<% } %>
