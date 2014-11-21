@@ -77,6 +77,17 @@ Exo.prototype.compute = function(now,birth) {
     if (bests.length==0) {
 	for (var i=0; i<log.length; i++) {
 	    var ex = log[i];
+	    if (ex.idiff<0) continue;
+	    if (ex.idiff<=3) {
+		bests.push(ex);
+		continue;
+	    }
+	    break;
+	}
+    }
+    if (bests.length==0) {
+	for (var i=0; i<log.length; i++) {
+	    var ex = log[i];
 	    if (ex.idiff<=3) {
 		bests.push(ex);
 		continue;

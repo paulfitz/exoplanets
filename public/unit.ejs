@@ -1,25 +1,48 @@
+<%
+
+var helpers = {};
+
+helpers.cap = function(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+helpers.sayWhen = function(unit) {
+    if (unit.idiff == 0) {
+	return "today";
+    } else if (unit.idiff == 1) {
+	return "tomorrow";
+    } else if (unit.idiff == -1) {
+	return "yesterday";
+    }
+    return "in " + unit.idiff + " days time";
+}
+
+%>
+
+
+<% if (example) { %>
+<div class="example">
+If you happen to be <%= example.name %>, here are some planets currently celebrating your birthday. If you are not <%= example.name %>, then just be happy for her.
+</div>
+<% } %>
+
+
 <% if (calc.best.length>0) { %>
 <div class='cheer'>
 Happy <%= calc.best[0].th %>
 <%= calc.best[0].ian %>
-Birthday!
+Birthday<%= (example!=null) ? (" " + example.name) : "" %>!
+<% if (calc.best[0].idiff!=0) { %>
+(<%= helpers.sayWhen(calc.best[0]) %>)
+<% } %>
 </div>
 <% } %>
-
 
 <% for (var i=0; i<calc.log.length; i++) { %>
 <% var unit = calc.log[i] %>
 <div class='event'>
   <b><%= unit.name %></b><br />
-  Age <%= unit.age %><br />
-  <% if (unit.idiff == 0) { %>
-  Today
-  <% } else if (unit.idiff == 1) { %>
-  Tomorrow
-  <% } else if (unit.idiff == -1) { %>
-  Yesterday
-  <% } else { %>
-  In <%= unit.idiff %> days time<br />
-  <% } %>
+  Age: <%= unit.age %><br />
+  <%= helpers.cap(helpers.sayWhen(unit)) %>
 </div>
 <% } %>

@@ -5,26 +5,28 @@
 	<title>Exoplanet Birthdays</title>
 	<link rel="stylesheet" href="/main.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
 	<script type="text/javascript" src="/exo.js"></script>
 	<script type="text/javascript" src="/ejs_production.js"></script>
     </head>
     <body>
 
-      <p>Enter your birth date</p>
+      <h1>A Very Exoplanet Birthday</h1>
+
+      <p class="hook">
+	Scientists have been finding more and more planets orbiting neighboring stars. More planets equals more birthdays equals more parties!
+	Enter your birth date, and find out what planets are celebrating your birthday RIGHT NOW.
+      </p>
 
       <form>
-	<input type="text" id="birth_date_year" placeholder="Year (NNNN)" />
+	<input type="text" id="birth_date_year" autofocus placeholder="Year (NNNN)" />
 	<input type="text" id="birth_date_month" placeholder="Month (NN)" />
 	<input type="text" id="birth_date_day" placeholder="Day (NN)" />
-	<input type="button" id="go" value="go" />
-	<input type="button" id="eg1" value="example1" />
-	<input type="button" id="eg2" value="example2" />
-	<input type="button" id="eg3" value="example3" />
+	<input type="button" id="go" value="birthday me" />
       </form>
 
-      <div id="date_string"></div>
-
-      <div id="result"></div>
+    <div id="date_string"></div>
+    <div id="result"></div>
 
 <script>
 
@@ -32,8 +34,21 @@
  var unit = new EJS({url: '/unit.ejs'});
 
  $(function() {
-   function update() {
+   function applyDate(year,month,day,example) {
+     var target = new Date(year,month-1,day);
+     var now = new Date();
+     var x = new Exo(exo_data);
+     var calc = x.compute(now,target);
      var page = $('#result');
+     page.html(unit.render({ calc: calc, example: example }));
+     console.log("calculated page");
+     console.log(calc);
+     return target;
+   }
+
+   function update() {
+     console.log("update");
+     var page = $('#date_string');
      page.html("");
      var year = parseFloat($('#birth_date_year').val());
      var month = parseFloat($('#birth_date_month').val());
@@ -42,30 +57,27 @@
      var imonth = Math.floor(month+0.5);
      var iday = Math.floor(day+0.5);
      if (isNaN(year)||isNaN(month)||isNaN(day)) {
-       if (!isNaN(year)) { 
-	 page.append("<div>year: " + iyear + "</div>"); 
-       } else {
-	 page.append("<div>(do not know birth year)</div>"); 
-       }
-       if (!isNaN(month)) { 
-	 page.append("<div>month: " + imonth + "</div>"); 
-       } else {
-	 page.append("<div>(do not know birth month)</div>"); 
-       }
-       if (!isNaN(day)) { 
-	 page.append("<div>day: " + iday + "</div>");
-       } else {
-	 page.append("<div>(do not know birth day)</div>"); 
+       if (!(isNaN(year)&&isNaN(month)&&isNaN(day))) {
+	 if (!isNaN(year)) { 
+	   page.append("<div>Year: " + iyear + "</div>"); 
+	 } else {
+	   page.append("<div>(waiting for year of birth)</div>"); 
+	 }
+	 if (!isNaN(month)) { 
+	   page.append("<div>Month: " + imonth + "</div>"); 
+	 } else {
+	   page.append("<div>(waiting for month of birth)</div>"); 
+	 }
+	 if (!isNaN(day)) { 
+	   page.append("<div>May: " + iday + "</div>");
+	 } else {
+	   page.append("<div>(waiting for day of birth)</div>"); 
+	 }
        }
        return;
      }
-     var target = new Date(iyear,imonth-1,iday);
-     var now = new Date();
+     var target = applyDate(iyear,imonth,iday,null);
      $("#date_string").html(target.toDateString());
-     var x = new Exo(exo_data);
-     var calc = x.compute(now,target);
-     page.html(unit.render({ calc: calc }));
- console.log(calc);
      if (window.history) {
         history.replaceState(null, null, "/" + iyear + "/" + imonth + "/" + iday)
      }
@@ -102,11 +114,17 @@
    });
 
 <% if (date) { %>
-     $('#birth_date_year').val(<%= parseInt(date.year) %>);
-     $('#birth_date_month').val(<%= parseInt(date.month) %>);
-     $('#birth_date_day').val(<%= parseInt(date.day) %>);
+     var year = <%= parseInt(date.year) %>;
+     var month = <%= parseInt(date.month) %>;
+     var day = <%= parseInt(date.day) %>;
+     $('#birth_date_year').val(year);
+     $('#birth_date_month').val(month);
+     $('#birth_date_day').val(day);
+     update();
+<% } else { %>
+     var example = <%- JSON.stringify(people[0]) %>;
+     applyDate(example.year,example.month,example.day,example);
 <% } %>
-   update();
  });
 </script>
 

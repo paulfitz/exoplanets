@@ -1,3 +1,8 @@
+body {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Voltaire', sans-serif;
+}
 
 .event {
   display: inline-block;
@@ -8,7 +13,45 @@
 }
 
 .cheer { 
-  font-size: 300%;
+  font-size: 250%;
   padding: 10px;
   margin: 10px;
+}
+
+.example { 
+  font-size: 200%;
+  padding: 10px;
+  margin: 10px;
+  color: #888;
+}
+
+.hook { 
+  font-size: 150%;
+  padding: 10px;
+  margin: 10px;
+}
+
+form { 
+  display: table;
+  margin: 0 auto;
+}
+
+form input { 
+  font-size: 150%;
+}
+
+form input[type=text] { 
+  width: 200px;
+  margin-right: 10px;
+}
+
+#date_string {
+  text-align: center;
+  font-style: italic;
+  color: #888;
+}
+
+h1 {
+  font-size: 400%;
+  text-align: center;
 }
