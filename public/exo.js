@@ -35,9 +35,15 @@ Exo.prototype.compute = function(now,birth) {
 	var ian = name.replace(/ /g,'-') + "-ian";
 	var th = "th";
 	switch (age % 10) {
-        case 1: th = "st";
-        case 2: th = "nd";
-        case 3: th = "rd";
+        case 1: 
+	    th = "st";
+	    break;
+        case 2: 
+	    th = "nd";
+	    break;
+        case 3: 
+	    th = "rd";
+	    break;
 	}
 	th = age + "<sup>" + th + "</sup>";
 	if (age == 0) th = "Zeroth";
