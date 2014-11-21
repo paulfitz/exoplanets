@@ -11,6 +11,7 @@
     </head>
     <body>
 
+      <div class="talky">
       <h1>A Very Exoplanet Birthday</h1>
 
       <p class="hook">
@@ -28,17 +29,18 @@
       </div>
 
     <div id="date_string"></div>
+    </div>
     <div id="result"></div>
 
 <script>
 
  var exo_data = <%- JSON.stringify(exo) %>;
  var unit = new EJS({url: '/unit.ejs'});
+ var now = new Date(new Date().toDateString());
 
  $(function() {
    function applyDate(year,month,day,example) {
      var target = new Date(year,month-1,day);
-     var now = new Date();
      var x = new Exo(exo_data);
      var calc = x.compute(now,target);
      var page = $('#result');
@@ -74,75 +76,73 @@
 	 var dd = $('#birth_date_day').val();
 	 var year = parseFloat(yy);
 	 var month = parseFloat(mm);
+	 var day = parseFloat(dd);
+	 if (isNaN(year)) {
+	     year = 0;
+	 }
+	 if (isNaN(day)) {
+	     day = 0;
+	 }
 	 if (isNaN(month)) {
 	     var s = $('#birth_date_month').val() + " 1, 2000";
 	     var d = new Date(s);
 	     month = d.getMonth()+1;
 	 }
-	 console.log(month);
-	 var day = parseFloat(dd);
 	 var iyear = Math.floor(year+0.5);
 	 var imonth = Math.floor(month+0.5);
 	 var iday = Math.floor(day+0.5);
-	 if (yy!=""||mm!=""||dd!="") {
-	     var good = 0;
-	     if (yy!="") { 
-		 if (updateHasYear) {
-		     page.append("<span>Year: " + iyear + "</span>"); 
-		     if (iyear<1800 || iyear>2300) {
-			 setState('#birth_date_year',0);
-		     } else {
-			 setState('#birth_date_year',1);
-			 good++;
-		     }
+	 if (yy==""&&mm==""&&dd=="") return null;
+	 var good = 0;
+	 if (yy!="") { 
+	     if (updateHasYear) {
+		 if (iyear<1800 || iyear>2300) {
+		     setState('#birth_date_year',0);
+		     page.append("<span>The year looks strange</span>"); 
+		 } else {
+		     setState('#birth_date_year',1);
+		     good++;
 		 }
-	     } else {
-		 setState('#birth_date_year',-1);
 	     }
-	     if (mm!="") {
-		 if (imonth<1 || imonth>12) {
-		     imonth = Math.NaN;
-		 }
-		 if (updateHasMonth) {
-		     if (isNaN(imonth)) {
-			 page.append("<span>Month: unrecognized</span>"); 
-		     } else {
-			 var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-			 page.append("<span>Month: " + imonth + " (" + monthNames[imonth-1] + ")</span>"); 
-		     }
-		     if (isNaN(imonth)) {
-			 setState('#birth_date_month',0);
-		     } else {
-			 setState('#birth_date_month',1);
-			 good++;
-		     }
-		 }
-	     } else {
-		 setState('#birth_date_month',-1);
-	     }
-	     if (dd!="") {
-		 if (iday<1 || iday>31) {
-		     iday = Math.NaN;
-		 }
-		 if (updateHasDay) {
-		     if (isNaN(iday)) {
-			 page.append("<span>Day: unrecognized</span>"); 
-		     } else {
-			 page.append("<span>Day: " + iday + "</span>"); 
-		     }
-		     if (isNaN(iday)) {
-			 setState('#birth_date_day',0);
-		     } else {
-			 setState('#birth_date_day',1);
-			 good++;
-		     }
-		 }
-		 good++;
-	     } else {
-		 setState('#birth_date_day',-1);
-	     }
-	     if (good<3) return null;
+	 } else {
+	     setState('#birth_date_year',-1);
 	 }
+	 if (mm!="") {
+	     if (imonth<1 || imonth>12) {
+		 imonth = Math.NaN;
+	     }
+	     if (updateHasMonth) {
+		 if (isNaN(imonth)) {
+		     page.append("<span>The month is odd</span>"); 
+		 }
+		 if (isNaN(imonth)) {
+		     setState('#birth_date_month',0);
+		 } else {
+		     setState('#birth_date_month',1);
+		     good++;
+		 }
+	     }
+	 } else {
+	     setState('#birth_date_month',-1);
+	 }
+	 if (dd!="") {
+	     if (iday<1 || iday>31) {
+		 iday = Math.NaN;
+	     }
+	     if (updateHasDay) {
+		 if (isNaN(iday)) {
+		     page.append("<span>The day is out of range</span>"); 
+		 }
+		 if (isNaN(iday)) {
+		     setState('#birth_date_day',0);
+		 } else {
+		     setState('#birth_date_day',1);
+		     good++;
+		 }
+	     }
+	 } else {
+	     setState('#birth_date_day',-1);
+	 }
+	 if (good<3) return null;
 	 return { year: year, month: month, day: day };
      }
 
@@ -154,10 +154,11 @@
        var goal = scan();
        if (goal==null) return;
        var target = applyDate(goal.year,goal.month,goal.day,null);
-       $("#date_string").html(target.toDateString());
+       $("#date_string").html("");
        if (window.history) {
            history.replaceState(null, null, "/" + goal.year + "/" + goal.month + "/" + goal.day)
        }
+       return false;
    }
 
      $('#birth_date_year').change(update);
@@ -201,6 +202,12 @@
      $('#birth_date_year').val(year);
      $('#birth_date_month').val(month);
      $('#birth_date_day').val(day);
+     <% if (date.nyear) { %>
+       var nyear = <%= parseInt(date.nyear) %>;
+       var nmonth = <%= parseInt(date.nmonth) %>;
+       var nday = <%= parseInt(date.nday) %>;
+       now = new Date(nyear,nmonth-1,nday);
+     <% } %>
      update();
 <% } else { %>
      var example = <%- JSON.stringify(people[0]) %>;

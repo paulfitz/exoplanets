@@ -2,11 +2,22 @@ html {
 }
 
 body {
-  max-width: 800px;
-  margin: 0 auto;
   font-family: 'Voltaire', sans-serif;
   background: black;
+  background: url("/images/space.jpg");
+  background-repeat: repeat;
+  background-attachment: fixed;
   color: white;
+}
+
+.talky {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.planets {
+  max-width: 1400px;
+  text-align: center;
 }
 
 .event {
@@ -19,14 +30,8 @@ body {
   text-align: center;
   border-radius: 75px;
   background: #caa;
+  text-shadow: #fff 0 0 0.2em;
   color: black;
-  background: -moz-linear-gradient(-45deg, #b3dced 0%, #29b8e5 50%, #bce0ee 100%);
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#b3dced), color-stop(50%,#29b8e5), color-stop(100%,#bce0ee));
-  background: -webkit-linear-gradient(-45deg, #b3dced 0%,#29b8e5 50%,#bce0ee 100%);
-  background: -o-linear-gradient(-45deg, #b3dced 0%,#29b8e5 50%,#bce0ee 100%);
-  background: -ms-linear-gradient(-45deg, #b3dced 0%,#29b8e5 50%,#bce0ee 100%);
-  background: linear-gradient(135deg, #b3dced 0%,#29b8e5 50%,#bce0ee 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee',GradientType=1 );
 }
 
 .inevent1 {
@@ -47,7 +52,7 @@ body {
 }
 
 .example { 
-  font-size: 200%;
+  font-size: 150%;
   padding: 10px;
   margin: 10px;
   color: #888;
@@ -120,7 +125,8 @@ input[type=button] {
 #date_string {
   text-align: center;
   font-style: italic;
-  color: #888;
+  color: #f00;
+  font-size: 150%;
 }
 
 #date_string span {

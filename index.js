@@ -9,22 +9,25 @@ app.use(express.static(__dirname + '/public'))
 
 var router = express.Router();
 
-router.get('/', function(request, response) {
+function mainRender(response,date) {
   response.render('index.ejs', {
       layout: false,
       exo: exo,
       people: people,
-      date: null
+      date: date
   });
+}
+
+router.get('/', function(request, response) {
+    mainRender(response,null);
 });
 
 router.get('/:year/:month/:day', function(request, response) {
-  response.render('index.ejs', {
-      layout: false,
-      exo: exo,
-      people: people,
-      date: request.params
-  });
+    mainRender(response,request.params);
+});
+
+router.get('/:year/:month/:day/:nyear/:nmonth/:nday', function(request, response) {
+    mainRender(response,request.params);
 });
 
 
