@@ -1,9 +1,7 @@
 var express = require('express')
 var app = express();
 
-var exo = require('./data/exoplanet.json');
-var inno = require('./data/innoplanet.json');
-exo = exo.concat(inno);
+var exo = require('./cache/periods.json');
 var people = require('./data/people.json');
 
 app.set('port', (process.env.PORT || 5000))

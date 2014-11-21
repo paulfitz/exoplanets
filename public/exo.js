@@ -3,6 +3,9 @@ Exo = function(stats) {
     this.stats = stats;
 }
 
+Exo.prototype.filter = function(ex) {
+}
+
 Exo.prototype.compute = function(now,birth) {
     var nowday = new Date(now.getTime());
     nowday.setHours(0);
@@ -13,15 +16,10 @@ Exo.prototype.compute = function(now,birth) {
     var log = [];
     for (var i=0; i<this.stats.length; i++) {
 	var ex = this.stats[i];
-	var name = ex["# name"];
+	var name = ex["n"];
 	var stats = "";
-	var orbital_period = parseFloat(ex[" orbital_period"]);
-	var orbital_period_err_max = parseFloat(ex[" orbital_period_err_max"]);
-	if (isNaN(orbital_period)) continue;
-	if (isNaN(orbital_period_err_max)) continue;
-	if (orbital_period_err_max<0.0001) continue;
-	if (orbital_period<0.0001) continue;
-	if (orbital_period<60) continue;
+	var orbital_period = ex["p"];
+	var orbital_period_err_max = ex["perr"];
 	if (orbital_period_err_max/orbital_period > 0.001) continue;
 	stats = " orbital period " + orbital_period + " days +- " + orbital_period_err_max + " days ";
 	var reps = days/orbital_period;
