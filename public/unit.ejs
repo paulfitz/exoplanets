@@ -41,8 +41,12 @@ Birthday<%= (example!=null) ? (" " + example.name) : "" %>!
 <% for (var i=0; i<calc.log.length; i++) { %>
 <% var unit = calc.log[i] %>
 <div class='event'>
+  <div class='inevent1'>
+  <div class='inevent'>
   <b><%= unit.name %></b><br />
   Age: <%= unit.age %><br />
   <%= helpers.cap(helpers.sayWhen(unit)) %>
+  </div>
+  </div>
 </div>
 <% } %>

@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8">
 	<title>Exoplanet Birthdays</title>
-	<link rel="stylesheet" href="/main.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/main.css" />
 	<script type="text/javascript" src="/exo.js"></script>
 	<script type="text/javascript" src="/ejs_production.js"></script>
     </head>
@@ -18,12 +18,14 @@
 	Enter your birth date, and find out what planets are celebrating your birthday RIGHT NOW.
       </p>
 
+      <div class="container">
       <form>
 	<input type="text" id="birth_date_year" autofocus placeholder="Year (NNNN)" />
 	<input type="text" id="birth_date_month" placeholder="Month (NN)" />
 	<input type="text" id="birth_date_day" placeholder="Day (NN)" />
-	<input type="button" id="go" value="birthday me" />
+	<a href="#" class="button" id="go">birthday me!</a>
       </form>
+      </div>
 
     <div id="date_string"></div>
     <div id="result"></div>
@@ -46,46 +48,125 @@
      return target;
    }
 
-   function update() {
-     console.log("update");
-     var page = $('#date_string');
-     page.html("");
-     var year = parseFloat($('#birth_date_year').val());
-     var month = parseFloat($('#birth_date_month').val());
-     var day = parseFloat($('#birth_date_day').val());
-     var iyear = Math.floor(year+0.5);
-     var imonth = Math.floor(month+0.5);
-     var iday = Math.floor(day+0.5);
-     if (isNaN(year)||isNaN(month)||isNaN(day)) {
-       if (!(isNaN(year)&&isNaN(month)&&isNaN(day))) {
-	 if (!isNaN(year)) { 
-	   page.append("<div>Year: " + iyear + "</div>"); 
-	 } else {
-	   page.append("<div>(waiting for year of birth)</div>"); 
-	 }
-	 if (!isNaN(month)) { 
-	   page.append("<div>Month: " + imonth + "</div>"); 
-	 } else {
-	   page.append("<div>(waiting for month of birth)</div>"); 
-	 }
-	 if (!isNaN(day)) { 
-	   page.append("<div>May: " + iday + "</div>");
-	 } else {
-	   page.append("<div>(waiting for day of birth)</div>"); 
-	 }
+   function setState(o,v) {
+       var jo = $(o);
+       if (v==1) {
+	   jo.removeClass("bad");
+	   jo.addClass("good");
+       } else if (v==0) {
+	   jo.removeClass("good");
+	   jo.addClass("bad");
+       } else {
+	   jo.removeClass("good");
+	   jo.removeClass("bad");
        }
-       return;
-     }
-     var target = applyDate(iyear,imonth,iday,null);
-     $("#date_string").html(target.toDateString());
-     if (window.history) {
-        history.replaceState(null, null, "/" + iyear + "/" + imonth + "/" + iday)
-     }
    }
 
-   $('#birth_date_year').change(update);
-   $('#birth_date_month').change(update);
-   $('#birth_date_day').change(update);
+     var updateHasYear = false;
+     var updateHasMonth = false;
+     var updateHasDay = false;
+
+     function scan() {
+	 var page = $('#date_string');
+	 page.html("");
+	 var yy = $('#birth_date_year').val();
+	 var mm = $('#birth_date_month').val();
+	 var dd = $('#birth_date_day').val();
+	 var year = parseFloat(yy);
+	 var month = parseFloat(mm);
+	 if (isNaN(month)) {
+	     var s = $('#birth_date_month').val() + " 1, 2000";
+	     var d = new Date(s);
+	     month = d.getMonth()+1;
+	 }
+	 console.log(month);
+	 var day = parseFloat(dd);
+	 var iyear = Math.floor(year+0.5);
+	 var imonth = Math.floor(month+0.5);
+	 var iday = Math.floor(day+0.5);
+	 if (yy!=""||mm!=""||dd!="") {
+	     var good = 0;
+	     if (yy!="") { 
+		 if (updateHasYear) {
+		     page.append("<span>Year: " + iyear + "</span>"); 
+		     if (iyear<1800 || iyear>2300) {
+			 setState('#birth_date_year',0);
+		     } else {
+			 setState('#birth_date_year',1);
+			 good++;
+		     }
+		 }
+	     } else {
+		 setState('#birth_date_year',-1);
+	     }
+	     if (mm!="") {
+		 if (imonth<1 || imonth>12) {
+		     imonth = Math.NaN;
+		 }
+		 if (updateHasMonth) {
+		     if (isNaN(imonth)) {
+			 page.append("<span>Month: unrecognized</span>"); 
+		     } else {
+			 var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+			 page.append("<span>Month: " + imonth + " (" + monthNames[imonth-1] + ")</span>"); 
+		     }
+		     if (isNaN(imonth)) {
+			 setState('#birth_date_month',0);
+		     } else {
+			 setState('#birth_date_month',1);
+			 good++;
+		     }
+		 }
+	     } else {
+		 setState('#birth_date_month',-1);
+	     }
+	     if (dd!="") {
+		 if (iday<1 || iday>31) {
+		     iday = Math.NaN;
+		 }
+		 if (updateHasDay) {
+		     if (isNaN(iday)) {
+			 page.append("<span>Day: unrecognized</span>"); 
+		     } else {
+			 page.append("<span>Day: " + iday + "</span>"); 
+		     }
+		     if (isNaN(iday)) {
+			 setState('#birth_date_day',0);
+		     } else {
+			 setState('#birth_date_day',1);
+			 good++;
+		     }
+		 }
+		 good++;
+	     } else {
+		 setState('#birth_date_day',-1);
+	     }
+	     if (good<3) return null;
+	 }
+	 return { year: year, month: month, day: day };
+     }
+
+   function update() {
+       console.log("update");
+       updateHasYear = $('#birth_date_year').val().length > 0;
+       updateHasMonth = $('#birth_date_month').val().length > 0;
+       updateHasDay = $('#birth_date_day').val().length > 0;
+       var goal = scan();
+       if (goal==null) return;
+       var target = applyDate(goal.year,goal.month,goal.day,null);
+       $("#date_string").html(target.toDateString());
+       if (window.history) {
+           history.replaceState(null, null, "/" + goal.year + "/" + goal.month + "/" + goal.day)
+       }
+   }
+
+     $('#birth_date_year').change(update);
+     $('#birth_date_month').change(update);
+     $('#birth_date_day').change(update);
+   
+     $('#birth_date_year').on("keyup",scan);
+     $('#birth_date_month').on("keyup",scan);
+     $('#birth_date_day').on("keyup",scan);
    
    $('#go').click(update);
 
