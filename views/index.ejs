@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Exoplanet birthdays. My God, it's full of birthdays.</title>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="jquery.html5-placeholder-shim.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/main.css" />
 	<script type="text/javascript" src="/exo.js"></script>
@@ -96,8 +97,6 @@
      var calc = x.compute(now,target);
      var page = $('#result');
      page.html(unit.render({ calc: calc, example: example }));
-     console.log("calculated page");
-     console.log(calc);
      return target;
    }
 
@@ -198,7 +197,6 @@
      }
 
    function update() {
-       console.log("update");
        updateHasYear = $('#birth_date_year').val().length > 0;
        updateHasMonth = $('#birth_date_month').val().length > 0;
        updateHasDay = $('#birth_date_day').val().length > 0;

@@ -28,7 +28,6 @@ Exo.prototype.compute = function(now,birth) {
 	var diff = base-days;
 	if (diff>orbital_period/2) diff -= orbital_period;
 	stats += ", reps " + reps + " diff " + diff;
-	console.log(stats);
 	if (diff>15) continue;
 	var idiff = Math.round(diff); 
 	if (idiff<-1) continue;
