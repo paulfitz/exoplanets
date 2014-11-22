@@ -10,6 +10,15 @@ body {
   color: white;
 }
 
+.sig {
+  font-size: 150%;
+}
+
+h1 {
+  font-size: 400%;
+  text-align: center;
+}
+
 .talky {
   max-width: 800px;
   margin: 0 auto;
@@ -53,14 +62,12 @@ body {
 }
 
 .example { 
-  font-size: 150%;
   padding: 10px;
   margin: 10px;
   color: #888;
 }
 
 .hook { 
-  font-size: 150%;
   padding: 10px;
   margin: 10px;
 }
@@ -136,32 +143,88 @@ input[type=text] {
 }
 
 @media screen and (max-width: 600px) {
-  .button {
-  }
-
   .button span {
     display: none;
   }
   .button:after {
     content: 'Go!';
   }
+
+  .sig {
+    font-size: 100%;
+  }
+
+  h1 {
+    font-size: 300%;
+  }
+
+  input { 
+    font-size: 100%;
+  }
+  input[type=text] { 
+    width: 70px;
+  }
+  .button {
+    font-size: 100%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  h1 {
+    font-size: 150%;
+  }
+  input { 
+    display: block;
+    margin: 0 auto;
+  }
+  input[type=text] { 
+    width: 100px;
+    margin: 0 auto;
+  }
+  form {
+    text-align: center;
+  }
+  .button {
+    display: block;
+    margin: 0 auto;
+    font-size: 150%;
+  }
+  .button span {
+    display: inline;
+  }
+  .button:after {
+    content: none;
+  }
+
+
+  .event {
+    margin: 10px;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    border-radius: 80px;
+    background: #caa;
+    text-shadow: #fff 0 0 0.2em;
+    color: black;
+    font-size: 11px;
+  }
+
+  .inevent1 {
+    width: 80px;
+    height: 80px;
+  }
+
 }
 
 #date_string {
   text-align: center;
   font-style: italic;
   color: #f00;
-  font-size: 150%;
 }
 
 #date_string span {
   margin-left:10px;
   margin-right:10px;
-}
-
-h1 {
-  font-size: 400%;
-  text-align: center;
 }
 
 .good {

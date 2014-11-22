@@ -45,7 +45,7 @@ helpers.rainbow = function(numOfSteps, step) {
 
 <% if (!example) { %>
 <% if (calc.best.length>0) { %>
-<div class='cheer'>
+<div class='cheer sig'>
 Happy <%= calc.best[0].th %>
 <%= calc.best[0].ian %>
 Birthday<%= (example!=null) ? (" " + example.name) : "" %>!
@@ -57,7 +57,7 @@ Birthday<%= (example!=null) ? (" " + example.name) : "" %>!
 <% } %>
 
 <% if (example) { %>
-<div class="example">
+<div class="example sig">
 For example, if you happen to be <%= example.name %>, here are some planets currently celebrating your birthday. 
 <% if (calc.best.length>0) { %>
 Happy <%= calc.best[0].th %>
