@@ -65,6 +65,12 @@ body {
   margin: 10px;
 }
 
+.faq { 
+  padding: 10px;
+  padding-top: 2em;
+  margin: 10px;
+}
+
 form { 
   display: table;
   margin: 0 auto;
@@ -79,15 +85,9 @@ input {
 }
 
 input[type=text] { 
-  width: 160px;
+  width: 150px;
   margin-right: 10px;
 }
-
-input[type=button] { 
-  background: #f00;
-  color: white;
-}
-
 
 .button {
   display: inline-block;
@@ -123,6 +123,30 @@ input[type=button] {
   background: #f00;
 }
 
+@media screen and (max-width: 799px) {
+  input { 
+    font-size: 100%;
+  }
+  input[type=text] { 
+    width: 80px;
+  }
+  .button {
+    font-size: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .button {
+  }
+
+  .button span {
+    display: none;
+  }
+  .button:after {
+    content: 'Go!';
+  }
+}
+
 #date_string {
   text-align: center;
   font-style: italic;
@@ -148,4 +172,8 @@ h1 {
 .bad {
   border-color: #f00;
   box-shadow: 0 0 10px #f00;
+}
+
+a { 
+  color: #aaf;
 }
