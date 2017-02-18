@@ -24,9 +24,9 @@
 
       <div class="container">
       <form>
-	<input type="tel" id="birth_date_year" autofocus placeholder="Year (NNNN)" />
-	<input type="tel" id="birth_date_month" placeholder="Month (NN)" />
-	<input type="tel" id="birth_date_day" placeholder="Day (NN)" />
+	<input type="tel" id="birth_date_year" autofocus placeholder="Year NNNN" />
+	<input type="tel" id="birth_date_month" placeholder="Month NN" />
+	<input type="tel" id="birth_date_day" placeholder="Day NN" />
 	<a href="#" class="button" id="go"><span>birthday me!</span></a>
       </form>
       </div>
@@ -94,16 +94,15 @@
 
    var ticker = null;
    function animatePlanets() {
-     $(".event").css("display", "none");
+     $(".event").hide()
      function scan() {
-        console.log("tick");
-        var lst = $(".event[style$='display: none;']").first();
-        console.log(lst);
-        if (lst[0]) {
-           console.log(lst);
-           lst.show();
-           ticker = setTimeout(scan, 100);
-        }
+        ticker = null;
+        var lst = $(".event").each(function() {
+          if (ticker==null && !$(this).is(':visible')) {
+            $(this).show();
+            ticker = setTimeout(scan, 200);
+          }
+        });
      }
      scan();
    }

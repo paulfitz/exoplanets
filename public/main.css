@@ -91,7 +91,7 @@ input {
   margin-bottom: 0px;
 }
 
-input[type=text] { 
+input[type=tel] { 
   width: 150px;
   margin-right: 10px;
 }
@@ -134,7 +134,7 @@ input[type=text] {
   input { 
     font-size: 100%;
   }
-  input[type=text] { 
+  input[type=tel] { 
     width: 80px;
   }
   .button {
@@ -161,7 +161,7 @@ input[type=text] {
   input { 
     font-size: 100%;
   }
-  input[type=text] { 
+  input[type=tel] { 
     width: 70px;
   }
   .button {
@@ -177,7 +177,7 @@ input[type=text] {
     display: block;
     margin: 0 auto;
   }
-  input[type=text] { 
+  input[type=tel] { 
     width: 100px;
     margin: 0 auto;
   }
