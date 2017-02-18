@@ -6,6 +6,15 @@ helpers.cap = function(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+helpers.sayTense = function(unit, person) {
+    if (unit.idiff == 0) {
+	return (person == 3) ? "is" : "are";
+    } else if (unit.idiff > 0) {
+	return "will be";
+    } 
+    return (person == 3) ? "was" : "were";
+}
+
 helpers.sayWhen = function(unit) {
     if (unit.idiff == 0) {
 	return "today";
@@ -78,7 +87,8 @@ If you are not <%= example.name %>, then just be happy for her.
   <div class='inevent1'>
   <div class='inevent'>
   <b><%= unit.name %></b><br />
-  Age: <%= unit.age %><br />
+  <%= name %> <%= helpers.sayTense(unit,person) %><br />
+  <b><%= unit.age %></b><br />
   <%= helpers.cap(helpers.sayWhen(unit)) %>
   </div>
   </div>

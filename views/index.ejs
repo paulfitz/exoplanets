@@ -4,9 +4,9 @@
         <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Exoplanet birthdays. My God, it's full of birthdays.</title>
+	<title>Exobirthdays = Exoplanet birthdays.  My God, it's full of birthdays.</title>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="jquery.html5-placeholder-shim.js"></script>
+	<script src="/jquery.html5-placeholder-shim.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/main.css" />
 	<script type="text/javascript" src="/exo.js"></script>
@@ -18,8 +18,8 @@
       <h1>Your Birthday, Now With Exoplanets</h1>
 
       <p class="hook sig">
-	Scientists have been finding more and more planets orbiting neighboring stars. More planets equals more birthdays equals more parties!
-	Enter your birth date, and find out what planets are celebrating your birthday RIGHT NOW.
+	More planets = more birthdays = more parties!<br />
+	Enter your birth date, find out what planets are celebrating your birthday RIGHT NOW.
       </p>
 
       <div class="container">
@@ -91,12 +91,30 @@
  var now = new Date(new Date().toDateString());
 
  $(function() {
-   function applyDate(year,month,day,example) {
+
+   var ticker = null;
+   function animatePlanets() {
+     $(".event").css("display", "none");
+     function scan() {
+        console.log("tick");
+        var lst = $(".event[style$='display: none;']").first();
+        console.log(lst);
+        if (lst[0]) {
+           console.log(lst);
+           lst.show();
+           ticker = setTimeout(scan, 100);
+        }
+     }
+     scan();
+   }
+
+   function applyDate(year,month,day,example,person,name) {
      var target = new Date(year,month-1,day);
      var x = new Exo(exo_data);
      var calc = x.compute(now,target);
      var page = $('#result');
-     page.html(unit.render({ calc: calc, example: example }));
+     page.html(unit.render({ calc: calc, example: example, person: person, name: name }));
+     animatePlanets();
      return target;
    }
 
@@ -202,7 +220,7 @@
        updateHasDay = $('#birth_date_day').val().length > 0;
        var goal = scan();
        if (goal==null) return;
-       var target = applyDate(goal.year,goal.month,goal.day,null);
+       var target = applyDate(goal.year,goal.month,goal.day,null,2,"you");
        $("#date_string").html("");
        if (window.history) {
            history.replaceState(null, null, "/" + goal.year + "/" + goal.month + "/" + goal.day)
@@ -220,30 +238,6 @@
    
    $('#go').click(update);
 
-   $('#eg1').click(function() {
-     $('#birth_date_year').val("1976");
-     $('#birth_date_month').val("9");
-     $('#birth_date_day').val("14");
-     update();
-     return false;
-   });
-
-   $('#eg2').click(function() {
-     $('#birth_date_year').val("2001");
-     $('#birth_date_month').val("4");
-     $('#birth_date_day').val("5");
-     update();
-     return false;
-   });
-
-   $('#eg3').click(function() {
-     $('#birth_date_year').val("2001");
-     $('#birth_date_month').val("11");
-     $('#birth_date_day').val("20");
-     update();
-     return false;
-   });
-
 <% if (date) { %>
      var year = <%= parseInt(date.year) %>;
      var month = <%= parseInt(date.month) %>;
@@ -260,7 +254,7 @@
      update();
 <% } else { %>
      var example = <%- JSON.stringify(people[0]) %>;
-     applyDate(example.year,example.month,example.day,example);
+     applyDate(example.year,example.month,example.day,example,3,"Ursula");
 <% } %>
  });
 </script>

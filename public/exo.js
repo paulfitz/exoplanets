@@ -61,10 +61,10 @@ Exo.prototype.compute = function(now,birth) {
 	});
     }
     function sortHit(a,b) {
-	var va = a.value;
-	var vb = b.value;
-	if (va>vb) return -1;
-	if (va<vb) return 1;
+	var va = Math.abs(a.value);
+	var vb = Math.abs(b.value);
+	if (va>vb) return 1;
+	if (va<vb) return -1;
 	return 0;
     }
     log.sort(sortHit);

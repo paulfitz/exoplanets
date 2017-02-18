@@ -1,62 +1,62 @@
 [
     { 
 	"# name": "Mercury",
-	" orbital_period": "87.9691",
-	" orbital_period_err_min": "0.001",
-	" orbital_period_err_max": "0.001"
+	"orbital_period": "87.9691",
+	"orbital_period_error_min": "0.001",
+	"orbital_period_error_max": "0.001"
     },
     {
 	"# name": "Venus",
-	" orbital_period": "224.701",
-	" orbital_period_err_min": "0.001",
-	" orbital_period_err_max": "0.001"
+	"orbital_period": "224.701",
+	"orbital_period_error_min": "0.001",
+	"orbital_period_error_max": "0.001"
     },
     {
 	"# name": "Earth",
-	" orbital_period": "365.256363004",
-	" orbital_period_err_min": "0.001",
-	" orbital_period_err_max": "0.001"
+	"orbital_period": "365.256363004",
+	"orbital_period_error_min": "0.001",
+	"orbital_period_error_max": "0.001"
     },
     {
 	"# name": "Mars",
-	" orbital_period": "686.971",
-	" orbital_period_err_min": "0.001",
-	" orbital_period_err_max": "0.001"
+	"orbital_period": "686.971",
+	"orbital_period_error_min": "0.001",
+	"orbital_period_error_max": "0.001"
     },
     {
 	"# name": "Jupiter",
-	" orbital_period": "4332.59",
-	" orbital_period_err_min": "0.001",
-	" orbital_period_err_max": "0.001"
+	"orbital_period": "4332.59",
+	"orbital_period_error_min": "0.001",
+	"orbital_period_error_max": "0.001"
     },
     {
 	"# name": "Saturn",
-	" orbital_period": "10759.22",
-	" orbital_period_err_min": "0.001",
-	" orbital_period_err_max": "0.001"	
+	"orbital_period": "10759.22",
+	"orbital_period_error_min": "0.001",
+	"orbital_period_error_max": "0.001"	
     },
     {
 	"# name": "Saturn",
-	" orbital_period": "10759.22",
-	" orbital_period_err_min": "0.001",
-	" orbital_period_err_max": "0.001"	
+	"orbital_period": "10759.22",
+	"orbital_period_error_min": "0.001",
+	"orbital_period_error_max": "0.001"	
     },
     {
 	"# name": "Uranus",
-	" orbital_period": "30687.15",
-	" orbital_period_err_min": "0.001",
-	" orbital_period_err_max": "0.001"	
+	"orbital_period": "30687.15",
+	"orbital_period_error_min": "0.001",
+	"orbital_period_error_max": "0.001"	
     },
     {
 	"# name": "Neptune",
-	" orbital_period": "60190.03",
-	" orbital_period_err_min": "0.001",
-	" orbital_period_err_max": "0.001"	
+	"orbital_period": "60190.03",
+	"orbital_period_error_min": "0.001",
+	"orbital_period_error_max": "0.001"	
     },
     {
 	"# name": "Pluto",
-	" orbital_period": "90465",
-	" orbital_period_err_min": "0.001",
-	" orbital_period_err_max": "0.001"	
+	"orbital_period": "90465",
+	"orbital_period_error_min": "0.001",
+	"orbital_period_error_max": "0.001"	
     }
 ]

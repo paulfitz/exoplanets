@@ -18,9 +18,9 @@
     "url": "https://github.com/paulfitz/exoplanets"
   },
   "keywords": [
-    "node",
+    "express",
     "heroku",
-    "express"
+    "node"
   ],
   "license": "MIT"
 }

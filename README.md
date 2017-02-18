@@ -1,3 +1,3 @@
-Now there are so many exoplanets found, you have lots of birthdays!
+Oh my god it is full of birthdays
 
 [exo.makesweet.com](http://exo.makesweet.com)

@@ -7,8 +7,8 @@ var exo2 = [];
 for (var i=0; i<exo.length; i++) {
     var ex = exo[i];
     var name = ex["# name"];
-    var orbital_period = parseFloat(ex[" orbital_period"]);
-    var orbital_period_err_max = parseFloat(ex[" orbital_period_err_max"]);
+    var orbital_period = parseFloat(ex["orbital_period"]);
+    var orbital_period_err_max = parseFloat(ex["orbital_period_error_max"]);
     if (isNaN(orbital_period)) continue;
     if (isNaN(orbital_period_err_max)) continue;
     if (orbital_period_err_max<0.0001) continue;
