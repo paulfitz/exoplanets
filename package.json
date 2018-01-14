@@ -4,7 +4,9 @@
   "description": "Birthdays in Space",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "filter": "node filter.js",
+    "watch": "nodemon -e js,ejs,json index.js"
   },
   "dependencies": {
     "express": "~4.9.x",

@@ -22,4 +22,4 @@ for (var i=0; i<exo.length; i++) {
 }
 
 var fs = require('fs');
-fs.writeFileSync("cache/periods.json",JSON.stringify(exo2));
+fs.writeFileSync("cache/periods.json",JSON.stringify(exo2,null,2));

@@ -2,7 +2,7 @@
 
 # this is a sketch of how to update list of planets
 
-which csvkit || {
+which csvjson || {
     sudo pip install csvkit
 }
 
