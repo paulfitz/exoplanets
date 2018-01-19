@@ -4,13 +4,16 @@
   "description": "Birthdays in Space",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "cli": "node cli.js",
     "filter": "node filter.js",
+    "start": "node index.js",
     "watch": "nodemon -e js,ejs,json index.js"
   },
+  "bin": "./cli.js",
   "dependencies": {
+    "ejs": "~1.0.0",
     "express": "~4.9.x",
-    "ejs": "~1.0.0"
+    "minimist": "^1.2.0"
   },
   "engines": {
     "node": "0.10.x"
@@ -20,9 +23,10 @@
     "url": "https://github.com/paulfitz/exoplanets"
   },
   "keywords": [
-    "express",
-    "heroku",
-    "node"
+    "exoplanet",
+    "planet",
+    "birthday",
+    "calendar"
   ],
   "license": "MIT"
 }

@@ -36,12 +36,6 @@
 	"orbital_period_error_max": "0.001"	
     },
     {
-	"# name": "Saturn",
-	"orbital_period": "10759.22",
-	"orbital_period_error_min": "0.001",
-	"orbital_period_error_max": "0.001"	
-    },
-    {
 	"# name": "Uranus",
 	"orbital_period": "30687.15",
 	"orbital_period_error_min": "0.001",

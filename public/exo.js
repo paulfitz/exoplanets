@@ -100,3 +100,7 @@ Exo.prototype.compute = function(now,birth) {
     }
     return { log: log, best: bests };
 }
+
+if (module) {
+    module.exports.Exo = Exo;
+}
