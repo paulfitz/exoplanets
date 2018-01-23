@@ -1,22 +1,38 @@
 html { 
+  background-color: black;
+  margin: 0;
+  padding: 0;
 }
 
 body {
+  margin: 0;
+  padding: 0;
   font-family: 'Voltaire', sans-serif;
-  background: black;
-  background: url("/images/space.jpg");
-  background-repeat: repeat;
+  background-color: black;
+  background: url("/images/party_planet.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
   background-attachment: fixed;
+  background-position: center top;
   color: white;
+}
+
+.all_page {
+ margin: 0;
+ padding: 0;
 }
 
 .sig {
   font-size: 150%;
+  text-shadow: #fff 0 0 0.2em;
 }
 
 h1 {
   font-size: 400%;
   text-align: center;
+  margin-top: 0px;
+  padding-top: 1em;
+  text-shadow: #000 0 0 0.2em;
 }
 
 .talky {
@@ -59,12 +75,12 @@ h1 {
   font-size: 250%;
   padding: 10px;
   margin: 10px;
+  text-align: center;
 }
 
 .example { 
   padding: 10px;
   margin: 10px;
-  color: #888;
 }
 
 .hook { 
@@ -79,21 +95,8 @@ h1 {
 }
 
 form { 
-  display: table;
+  display: block;
   margin: 0 auto;
-}
-
-input { 
-  font-size: 150%;
-  padding: 10px;
-  height: 1.5em;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
-
-input[type=tel] { 
-  width: 150px;
-  margin-right: 10px;
 }
 
 .button {
@@ -131,41 +134,14 @@ input[type=tel] {
 }
 
 @media screen and (max-width: 799px) {
-  input { 
-    font-size: 100%;
-  }
-  input[type=tel] { 
-    width: 80px;
-  }
-  .button {
-    font-size: 100%;
-  }
 }
 
 @media screen and (max-width: 600px) {
-  .button span {
-    display: none;
-  }
-  .button:after {
-    content: 'Go!';
-  }
-
   .sig {
-    font-size: 100%;
   }
 
   h1 {
     font-size: 300%;
-  }
-
-  input { 
-    font-size: 100%;
-  }
-  input[type=tel] { 
-    width: 70px;
-  }
-  .button {
-    font-size: 100%;
   }
 }
 
@@ -173,30 +149,6 @@ input[type=tel] {
   h1 {
     font-size: 150%;
   }
-  input { 
-    display: block;
-    margin: 0 auto;
-  }
-  input[type=tel] { 
-    width: 100px;
-    margin: 0 auto;
-  }
-  form {
-    text-align: center;
-  }
-  .button {
-    display: block;
-    margin: 0 auto;
-    font-size: 150%;
-  }
-  .button span {
-    display: inline;
-  }
-  .button:after {
-    content: none;
-  }
-
-
   .event {
     margin: 10px;
     width: 80px;
@@ -227,6 +179,22 @@ input[type=tel] {
   margin-right:10px;
 }
 
+input { 
+  display: block;
+  max-width: 100%;
+  font-family: Courier, monospace;
+  background-color: rgba(0,0,0,0.5);
+  border: 3px solid transparent;
+  border-radius: 1em;
+  outline: none;
+  color: white;
+  text-align: center;
+  font-size: 400%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-shadow: #00f 0 0 0.2em;
+}
+
 .good {
   border-color: #0f0;
   box-shadow: 0 0 10px #0f0;
@@ -239,4 +207,12 @@ input[type=tel] {
 
 a { 
   color: #aaf;
+}
+
+.container {
+  text-align: center;
+}
+
+.container span {
+  border-top: 1px solid white;
 }

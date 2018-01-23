@@ -65,16 +65,19 @@ Birthday<%= (example!=null) ? (" " + example.name) : "" %>!
 <% } %>
 <% } %>
 
+<% if (!example) { %>
+
 <% if (example) { %>
 <div class="example sig">
-For example, if you happen to be <%= example.name %>, here are some planets currently celebrating your birthday. 
+For example, if you are <%= example.name %>: 
 <% if (calc.best.length>0) { %>
 Happy <%= calc.best[0].th %>
 <%= calc.best[0].ian %>
 Birthday!
 <% } %>
-If you are not <%= example.name %>, then just be happy for her.
+If you are not <%= example.name %>, then type your birthdate.
 </div>
+<% } %>
 <% } %>
 
 </div>

@@ -4,31 +4,30 @@
         <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Exobirthdays = Exoplanet birthdays.  My God, it's full of birthdays.</title>
+	<title>Exobirthdays. More planets, more birthdays.</title>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="/jquery.html5-placeholder-shim.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/main.css" />
 	<script type="text/javascript" src="/exo.js"></script>
+	<script type="text/javascript" src="/editor.js"></script>
 	<script type="text/javascript" src="/ejs_production.js"></script>
     </head>
     <body>
-
+      <div class="all_page">
       <div class="talky">
-      <h1>Your Birthday, Now With Exoplanets</h1>
+      <h1>Where is your birthday today?</h1>
 
       <p class="hook sig">
-	More planets = more birthdays = more parties!<br />
-	Enter your birth date, find out what planets are celebrating your birthday RIGHT NOW.
       </p>
 
       <div class="container">
-      <form>
-	<input type="tel" id="birth_date_year" autofocus placeholder="Year NNNN" />
-	<input type="tel" id="birth_date_month" placeholder="Month NN" />
-	<input type="tel" id="birth_date_day" placeholder="Day NN" />
-	<a href="#" class="button" id="go"><span>birthday me!</span></a>
-      </form>
+        <form>
+          <input type="tel" id="birth_date_all" class="date_all" autofocus spellcheck=false value="YYYY.MM.DD" />
+        </form>
+        <p>
+          <span>Enter birth date to compute exoplanet birthdays.</span>
+        </p>
       </div>
 
     <div id="date_string sig"></div>
@@ -91,6 +90,15 @@
  var now = new Date(new Date().toDateString());
 
  $(function() {
+   var update = null;
+   var update_incomplete = null;
+   var editor = new Editor($('#birth_date_all'), function(date) {
+     if (update) { update(date); }
+   },
+ function() {
+   if (update_incomplete) { update_incomplete(); }
+ });
+
 
    var ticker = null;
    function animatePlanets() {
@@ -135,15 +143,16 @@
      var updateHasMonth = false;
      var updateHasDay = false;
 
-     function scan() {
+     function scan(date) {
 	 var page = $('#date_string');
 	 page.html("");
-	 var yy = $('#birth_date_year').val();
-	 var mm = $('#birth_date_month').val();
-	 var dd = $('#birth_date_day').val();
+	 var yy = date[0];
+	 var mm = date[1];
+	 var dd = date[2]
 	 var year = parseFloat(yy);
 	 var month = parseFloat(mm);
 	 var day = parseFloat(dd);
+ /*
 	 if (isNaN(year)) {
 	     year = 0;
 	 }
@@ -163,15 +172,15 @@
 	 if (yy!="") { 
 	     if (updateHasYear) {
 		 if (iyear<1800 || iyear>2300) {
-		     setState('#birth_date_year',0);
+		     setState('#birth_date_all',0);
 		     page.append("<span>The year looks strange</span>"); 
 		 } else {
-		     setState('#birth_date_year',1);
+                     setState('#birth_date_all',1);
 		     good++;
 		 }
 	     }
 	 } else {
-	     setState('#birth_date_year',-1);
+	     setState('#birth_date_all',-1);
 	 }
 	 if (mm!="") {
 	     if (imonth<1 || imonth>12) {
@@ -182,9 +191,9 @@
 		     page.append("<span>The month is odd</span>"); 
 		 }
 		 if (isNaN(imonth)) {
-		     setState('#birth_date_month',0);
+		     setState('#birth_date_all',0);
 		 } else {
-		     setState('#birth_date_month',1);
+		     setState('#birth_date_all',1);
 		     good++;
 		 }
 	     }
@@ -210,53 +219,48 @@
 	     setState('#birth_date_day',-1);
 	 }
 	 if (good<3) return null;
+                     */
 	 return { year: year, month: month, day: day };
      }
 
-   function update() {
-       updateHasYear = $('#birth_date_year').val().length > 0;
-       updateHasMonth = $('#birth_date_month').val().length > 0;
-       updateHasDay = $('#birth_date_day').val().length > 0;
-       var goal = scan();
+   update = function(date) {
+       var goal = scan(date);
        if (goal==null) return;
+       if (goal.month < 1 || goal.month > 12 || goal.day < 1 || goal.day > 31) {
+         setState('#birth_date_all',0);
+         return false;
+       }
        var target = applyDate(goal.year,goal.month,goal.day,null,2,"you");
        $("#date_string").html("");
        if (window.history) {
            history.replaceState(null, null, "/" + goal.year + "/" + goal.month + "/" + goal.day)
        }
        return false;
-   }
+   };
 
-     $('#birth_date_year').change(update);
-     $('#birth_date_month').change(update);
-     $('#birth_date_day').change(update);
-   
-     $('#birth_date_year').on("keyup",scan);
-     $('#birth_date_month').on("keyup",scan);
-     $('#birth_date_day').on("keyup",scan);
-   
-   $('#go').click(update);
+   update_incomplete = function() {
+     setState('#birth_date_all',-1);
+   };
 
 <% if (date) { %>
      var year = <%= parseInt(date.year) %>;
      var month = <%= parseInt(date.month) %>;
      var day = <%= parseInt(date.day) %>;
-     $('#birth_date_year').val(year);
-     $('#birth_date_month').val(month);
-     $('#birth_date_day').val(day);
+     editor.setDate(year, month, day);
      <% if (date.nyear) { %>
        var nyear = <%= parseInt(date.nyear) %>;
        var nmonth = <%= parseInt(date.nmonth) %>;
        var nday = <%= parseInt(date.nday) %>;
        now = new Date(nyear,nmonth-1,nday);
      <% } %>
-     update();
+     //update();
 <% } else { %>
      var example = <%- JSON.stringify(people[0]) %>;
-     applyDate(example.year,example.month,example.day,example,3,"Ursula");
+     applyDate(example.year,example.month,example.day,example,3,"Ursula K Le Guin");
 <% } %>
  });
 </script>
 
+      </div>
     </body>
 </html>
