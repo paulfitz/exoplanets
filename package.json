@@ -11,7 +11,7 @@
   },
   "bin": "./cli.js",
   "dependencies": {
-    "ejs": "~1.0.0",
+    "ejs": "~>2.5.5",
     "express": "~4.9.x",
     "minimist": "^1.2.0"
   },
