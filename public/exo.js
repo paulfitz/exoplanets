@@ -101,6 +101,6 @@ Exo.prototype.compute = function(now,birth) {
     return { log: log, best: bests };
 }
 
-if (module) {
+if (typeof module !== 'undefined') {
     module.exports.Exo = Exo;
 }

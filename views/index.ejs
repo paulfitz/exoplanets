@@ -85,6 +85,8 @@
 
 <script>
 
+ var urlName = <%- JSON.stringify("" + ((date && date.name) || "you")) %>;
+ var urlNamePerson = <%- (date && date.name && (""+date.name).toLowerCase() !== 'you') ? 3 : 2  %>;
  var exo_data = <%- JSON.stringify(exo) %>;
  var unit = new EJS({url: '/unit.ejs'});
  var now = new Date(new Date().toDateString());
@@ -230,10 +232,14 @@
          setState('#birth_date_all',0);
          return false;
        }
-       var target = applyDate(goal.year,goal.month,goal.day,null,2,"you");
+       var target = applyDate(goal.year,goal.month,goal.day,null,urlNamePerson,urlName);
        $("#date_string").html("");
        if (window.history) {
-           history.replaceState(null, null, "/" + goal.year + "/" + goal.month + "/" + goal.day)
+         if (urlName === 'you') {
+           history.replaceState(null, null, "/" + goal.year + "/" + goal.month + "/" + goal.day);
+         } else {
+           history.replaceState(null, null, "/" + goal.year + "/" + goal.month + "/" + goal.day + "/" + encodeURIComponent(urlName));
+         }
        }
        return false;
    };

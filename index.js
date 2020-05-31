@@ -26,6 +26,10 @@ router.get('/:year/:month/:day', function(request, response) {
     mainRender(response,request.params);
 });
 
+router.get('/:year/:month/:day/:name', function(request, response) {
+    mainRender(response,request.params);
+});
+
 router.get('/:year/:month/:day/:nyear/:nmonth/:nday', function(request, response) {
     mainRender(response,request.params);
 });
